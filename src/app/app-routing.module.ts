@@ -1,10 +1,15 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
+import { RouterModule, Routes } from '@angular/router';
+import { AccountComponent } from './ui/account/account.component';
+
+const routes: Routes = [
+  { path: "", redirectTo: "account", pathMatch: "full" },
+  { path: "account", component: AccountComponent }
+];
 
 @NgModule({
-  declarations: [],
-  imports: [
-    CommonModule
-  ]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
 export class AppRoutingModule { }
