@@ -1,2 +1,54 @@
-<h1>account works!</h1>
-<button mat-raised-button color="primary">Primary</button>
+<button (click)="connectToMetamask()" id="btnEnableMetamask">
+  Enable metamask
+</button>
+
+<br />
+<hr />
+<button (click)="getAccount()" id="account">Get Accounts</button>
+<div id="accountdiv">
+  Connected wallet address :
+  {{ MyAccount }}
+</div>
+<br />
+<hr />
+<button (click)="getChainId()" id="chainid">Get Chain Id</button>
+<div id="chaindiv">
+  Connected chain id :
+  {{ ChainId }}
+</div>
+<br />
+<hr />
+<button (click)="getBnbBalance()" id="balance">Get BNB Balance</button>
+<div id="balancediv">
+  BNB Balance :
+  {{ Balance }}
+</div>
+<br />
+<hr />
+<button (click)="mintArtfinNFT()" id="nft">Mint NFT</button>
+<div id="nftdiv">
+  NFT Minted :
+  {{ NFT }}
+</div>
+<br />
+<hr />
+<button (click)="getGoatxBalance()" id="goatx">Check Goatx Balance</button>
+<div id="goatxbaldiv">
+  Goatx Token Balance :
+  {{ GOATXBAL }}
+</div>
+<br />
+<hr />
+<button (click)="approveGoatx()" id="approvegoatx">Approve Goatx</button>
+<br />
+<hr />
+<button (click)="approveGrainStore()" id="approvegrainstore">
+  Approve GrainStore
+</button>
+<br />
+<hr />
+<button (click)="stakeGoatx()" id="stakegoatx">Stake Goatx</button>
+<br />
+<hr />
+<button (click)="unstakeGoatx()" id="unstakegoatx">Unstake Goatx</button>
+<router-outlet></router-outlet>
