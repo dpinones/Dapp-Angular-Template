@@ -5,7 +5,7 @@ import {
 import { Contract, ethers } from 'ethers';
 import * as abis from './../../../utils/getAbis';
 // import * as artfinabi from './../../../constants/abis/artfin.json';
-const artfinabi = require("./../../../constants/abis/artfin.json");
+const artfinabi = require('./../../../constants/abis/artfin.json');
 import { getContractAddress } from 'ethers/lib/utils';
 
 declare let window: any;
@@ -77,7 +77,7 @@ export class BlockchainService {
 
   async getChainId() {
     let chainId: number;
-    console.log("window.ethereum = ", window.ethereum);
+    console.log('window.ethereum = ', window.ethereum);
     chainId = parseInt(window.ethereum.chainId);
     return chainId;
   }
@@ -151,8 +151,14 @@ export class BlockchainService {
     await masterChefContract.leaveStaking(amount.toString());
   }
 
-  async sendEther(payment: string, address: string, amount: number){
-    
+  async sendEther(sender: string, receiver: string, amount: string, payment: string) {
+
+    console.log("sender = ", sender);
+    console.log("receiver = ", receiver);
+    console.log("amount = ", amount);
+    console.log("payment = ", payment);
+
+
     let paymentContract: Contract;
     var provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
@@ -162,14 +168,14 @@ export class BlockchainService {
       signer
     );
     paymentContract.connect(signer);
-    await paymentContract.nuevaTransaccion(amount.toString());
-
+    // Acccounts now exposed
+    const params = { value: ethers.utils.parseEther(amount) };
+    await paymentContract.nuevaTransaccion(receiver, params);
   }
 
-  async getHolaMundo(payment: string){
-    
+  async getHolaMundo(payment: string) {
     console.log(payment);
-    
+
     let paymentContract: Contract;
     var provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
@@ -181,7 +187,7 @@ export class BlockchainService {
     paymentContract.connect(signer);
     let holaMundo: string;
     holaMundo = await paymentContract.holaMundo();
-    console.log("holaMundo = ", holaMundo);
+    console.log('holaMundo = ', holaMundo);
     return holaMundo;
   }
 }

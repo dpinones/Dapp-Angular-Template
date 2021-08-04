@@ -20,7 +20,7 @@ export class AccountComponent {
   Balance: any;
   GOATXBAL: any;
   valueEther: any;
-  address: any;
+  addressReceiver: any;
   holaMundo: any;
 
   async connectToMetamask() {
@@ -105,12 +105,16 @@ export class AccountComponent {
 
   async sendEther(){
     console.log("valueEther = ", this.valueEther);
-    console.log("address = ", this.address);
+    console.log("address = ", this.addressReceiver);
     this.holaMundo = await this.blockchainService.sendEther(
-      contractAddresses.getPaymentAddress(),
-      this.address,
-      this.toWei(this.valueEther)
+      this.MyAccount,
+      this.addressReceiver,
+      this.valueEther,
+      contractAddresses.getPaymentAddress()
     );
+
+    // this.toWei(this.valueEther),
+
   }
 
   async getHolaMundo(){
