@@ -9,3 +9,7 @@ export function getGrainStoreAddress() {
 export function getMasterChefAddress() {
     return "0xa2807727A626a2E2212Af9498bb07746ADc244c7"
 }
+
+export function getPaymentAddress() {
+    return "0x063E05d7494a2e9642b6eB578239217d68ADc488"
+}

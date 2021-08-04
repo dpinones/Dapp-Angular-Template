@@ -77,6 +77,7 @@ export class BlockchainService {
 
   async getChainId() {
     let chainId: number;
+    console.log("window.ethereum = ", window.ethereum);
     chainId = parseInt(window.ethereum.chainId);
     return chainId;
   }
@@ -148,5 +149,39 @@ export class BlockchainService {
     );
     masterChefContract.connect(signer);
     await masterChefContract.leaveStaking(amount.toString());
+  }
+
+  async sendEther(payment: string, address: string, amount: number){
+    
+    let paymentContract: Contract;
+    var provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    paymentContract = new ethers.Contract(
+      payment,
+      abis.getAbiForPayment(),
+      signer
+    );
+    paymentContract.connect(signer);
+    await paymentContract.nuevaTransaccion(amount.toString());
+
+  }
+
+  async getHolaMundo(payment: string){
+    
+    console.log(payment);
+    
+    let paymentContract: Contract;
+    var provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    paymentContract = new ethers.Contract(
+      payment,
+      abis.getAbiForPayment(),
+      signer
+    );
+    paymentContract.connect(signer);
+    let holaMundo: string;
+    holaMundo = await paymentContract.holaMundo();
+    console.log("holaMundo = ", holaMundo);
+    return holaMundo;
   }
 }

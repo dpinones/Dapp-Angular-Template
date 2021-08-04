@@ -19,6 +19,10 @@ export class AccountComponent {
   GoatxStakeAmount: any = '10';
   Balance: any;
   GOATXBAL: any;
+  valueEther: any;
+  address: any;
+  holaMundo: any;
+
   async connectToMetamask() {
     await this.blockchainService.connectToMetamask();
   }
@@ -96,6 +100,22 @@ export class AccountComponent {
     await this.blockchainService.unstakeGoatx(
       contractAddresses.getMasterChefAddress(),
       this.toWei(this.GoatxStakeAmount)
+    );
+  }
+
+  async sendEther(){
+    console.log("valueEther = ", this.valueEther);
+    console.log("address = ", this.address);
+    this.holaMundo = await this.blockchainService.sendEther(
+      contractAddresses.getPaymentAddress(),
+      this.address,
+      this.toWei(this.valueEther)
+    );
+  }
+
+  async getHolaMundo(){
+    this.holaMundo = await this.blockchainService.getHolaMundo(
+      contractAddresses.getPaymentAddress()
     );
   }
 

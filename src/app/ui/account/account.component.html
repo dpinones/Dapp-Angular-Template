@@ -9,6 +9,7 @@
   Connected wallet address :
   {{ MyAccount }}
 </div>
+
 <br />
 <hr />
 <button (click)="getChainId()" id="chainid">Get Chain Id</button>
@@ -23,6 +24,20 @@
   BNB Balance :
   {{ Balance }}
 </div>
+
+<br />
+<hr />
+<input type="text" [(ngModel)]="address" placeholder="address">
+<input type="text" [(ngModel)]="valueEther" placeholder="value">
+<button (click)="sendEther()">  Send ETHER</button>
+
+<br />
+<hr />
+<button (click)="getHolaMundo()"> Haz click</button>
+<div>
+  {{ holaMundo }}
+</div>
+
 <br />
 <hr />
 <button (click)="mintArtfinNFT()" id="nft">Mint NFT</button>
