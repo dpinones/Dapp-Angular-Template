@@ -2,7 +2,7 @@ import {
   Injectable,
   ɵCompiler_compileModuleSync__POST_R3__,
 } from '@angular/core';
-import { Contract, ethers } from 'ethers';
+import { Contract, ethers, BigNumber } from 'ethers';
 import * as abis from './../../../utils/getAbis';
 // import * as artfinabi from './../../../constants/abis/artfin.json';
 const artfinabi = require('./../../../constants/abis/artfin.json');
@@ -18,7 +18,6 @@ export class BlockchainService {
   private signer: any;
   private enable: any;
   private accounts: any;
-  private pancakeSwapContract = '0x10ED43C718714eb63d5aA57B78B54704E256024E';
   constructor() {}
 
   async connectToMetamask() {
@@ -40,33 +39,6 @@ export class BlockchainService {
       enable = window.ethereum.request({ method: 'eth_requestAccounts' });
     });
     return Promise.resolve(enable);
-  }
-  async mintArtfin() {
-    var accountconnect = await window.ethereum.request({
-      method: 'eth_requestAccounts',
-    });
-
-    var provider = new ethers.providers.Web3Provider(window.ethereum);
-
-    var signer = provider.getSigner();
-    console.log('Signer : ' + signer);
-
-    const tokenaddress = '0x80Ce15D1bAcf1d672F7d4c301FF24f8dA6fBf5E1';
-
-    const contract = new ethers.Contract(tokenaddress, artfinabi, signer);
-
-    const mintAddress = '0x9803Ce33953964D397d0fb7C17556Ab96235F3c1';
-
-    const mintUrl = 'http://www.google.com';
-    var mintToken;
-
-    await new Promise((resolve, reject) => {
-      mintToken = contract.mint(mintAddress, mintUrl);
-    });
-
-    var mintedToken = Promise.resolve(mintToken);
-
-    console.log(mintedToken);
   }
 
   async getAccount() {
@@ -91,73 +63,7 @@ export class BlockchainService {
     return balance;
   }
 
-  async getTokenBalance(contractAddress: string, userAddress: string) {
-    let balance: number;
-    let tokenContract: Contract;
-    var provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    tokenContract = new ethers.Contract(
-      contractAddress,
-      abis.getAbiForToken(),
-      provider
-    );
-    console.log('Getting balance for ' + tokenContract.address);
-    tokenContract.connect(provider);
-    balance = await tokenContract.balanceOf(userAddress);
-    return balance;
-  }
-
-  async approveTokenForContract(tokenAddress: string, spenderAddress: string) {
-    let goatxContract: Contract;
-    let approval: boolean;
-    var provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    goatxContract = new ethers.Contract(
-      tokenAddress,
-      abis.getAbiForToken(),
-      signer
-    );
-    goatxContract.connect(signer);
-    approval = await goatxContract.approve(
-      spenderAddress,
-      '99999999999999999999999999999999999999999999'
-    );
-    return approval;
-  }
-
-  async stakeGoatx(masterChef: string, amount: number) {
-    let masterChefContract: Contract;
-    var provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    masterChefContract = new ethers.Contract(
-      masterChef,
-      abis.getAbiForMasterChef(),
-      signer
-    );
-    masterChefContract.connect(signer);
-    await masterChefContract.enterStaking(amount.toString());
-  }
-
-  async unstakeGoatx(masterChef: string, amount: number) {
-    let masterChefContract: Contract;
-    var provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    masterChefContract = new ethers.Contract(
-      masterChef,
-      abis.getAbiForMasterChef(),
-      signer
-    );
-    masterChefContract.connect(signer);
-    await masterChefContract.leaveStaking(amount.toString());
-  }
-
   async sendEther(sender: string, receiver: string, amount: string, payment: string) {
-
-    console.log("sender = ", sender);
-    console.log("receiver = ", receiver);
-    console.log("amount = ", amount);
-    console.log("payment = ", payment);
-
 
     let paymentContract: Contract;
     var provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -170,12 +76,11 @@ export class BlockchainService {
     paymentContract.connect(signer);
     // Acccounts now exposed
     const params = { value: ethers.utils.parseEther(amount) };
+    console.log('ethers.utils.parseEther(amount):', ethers.utils.parseEther(amount))
     await paymentContract.nuevaTransaccion(receiver, params);
   }
 
   async getHolaMundo(payment: string) {
-    console.log(payment);
-
     let paymentContract: Contract;
     var provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();

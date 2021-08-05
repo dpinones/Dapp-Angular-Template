@@ -37,33 +37,4 @@
 <div>
   {{ holaMundo }}
 </div>
-
-<br />
-<hr />
-<button (click)="mintArtfinNFT()" id="nft">Mint NFT</button>
-<div id="nftdiv">
-  NFT Minted :
-  {{ NFT }}
-</div>
-<br />
-<hr />
-<button (click)="getGoatxBalance()" id="goatx">Check Goatx Balance</button>
-<div id="goatxbaldiv">
-  Goatx Token Balance :
-  {{ GOATXBAL }}
-</div>
-<br />
-<hr />
-<button (click)="approveGoatx()" id="approvegoatx">Approve Goatx</button>
-<br />
-<hr />
-<button (click)="approveGrainStore()" id="approvegrainstore">
-  Approve GrainStore
-</button>
-<br />
-<hr />
-<button (click)="stakeGoatx()" id="stakegoatx">Stake Goatx</button>
-<br />
-<hr />
-<button (click)="unstakeGoatx()" id="unstakegoatx">Unstake Goatx</button>
 <router-outlet></router-outlet>

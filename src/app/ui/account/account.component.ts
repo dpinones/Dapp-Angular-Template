@@ -8,10 +8,9 @@ import { getContractAddress } from 'ethers/lib/utils';
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
-  styleUrls: ['./account.component.css']
+  styleUrls: ['./account.component.css'],
 })
 export class AccountComponent {
-
   NFT: any;
   constructor(private blockchainService: BlockchainService) {}
   MyAccount = '';
@@ -52,60 +51,14 @@ export class AccountComponent {
     account = await this.blockchainService.getAccount();
     this.MyAccount = account[0];
     balance = await this.blockchainService.getBnbBalance(this.MyAccount);
+    console.log('balance:', balance);
+    console.log('parseInt(balance):', parseInt(balance));
     this.Balance = this.toEth(parseInt(balance));
   }
 
-  async getGoatxBalance() {
-    let goatxbal: number;
-    let account: string[];
-    account = await this.blockchainService.getAccount();
-    this.MyAccount = account[0];
-    goatxbal = await this.blockchainService.getTokenBalance(
-      contractAddresses.getGoatxTokenAddress(),
-      this.MyAccount
-    );
-    this.GOATXBAL = this.toEth(goatxbal);
-  }
-
-  async mintArtfinNFT() {
-    let nft;
-    nft = await this.blockchainService.mintArtfin();
-    this.NFT = nft;
-  }
-
-  async approveGoatx() {
-    let approved: boolean;
-    approved = await this.blockchainService.approveTokenForContract(
-      contractAddresses.getGoatxTokenAddress(),
-      contractAddresses.getMasterChefAddress()
-    );
-  }
-
-  async approveGrainStore() {
-    let approved: boolean;
-    approved = await this.blockchainService.approveTokenForContract(
-      contractAddresses.getGrainStoreAddress(),
-      contractAddresses.getMasterChefAddress()
-    );
-  }
-
-  async stakeGoatx() {
-    await this.blockchainService.stakeGoatx(
-      contractAddresses.getMasterChefAddress(),
-      this.toWei(this.GoatxStakeAmount)
-    );
-  }
-
-  async unstakeGoatx() {
-    await this.blockchainService.unstakeGoatx(
-      contractAddresses.getMasterChefAddress(),
-      this.toWei(this.GoatxStakeAmount)
-    );
-  }
-
-  async sendEther(){
-    console.log("valueEther = ", this.valueEther);
-    console.log("address = ", this.addressReceiver);
+  async sendEther() {
+    console.log('valueEther = ', this.valueEther);
+    console.log('address = ', this.addressReceiver);
     this.holaMundo = await this.blockchainService.sendEther(
       this.MyAccount,
       this.addressReceiver,
@@ -114,13 +67,11 @@ export class AccountComponent {
     );
 
     // this.toWei(this.valueEther),
-
   }
 
-  async getHolaMundo(){
+  async getHolaMundo() {
     this.holaMundo = await this.blockchainService.getHolaMundo(
       contractAddresses.getPaymentAddress()
     );
   }
-
 }
